@@ -72,7 +72,8 @@ public class JsonUtil {
         List<IdNameCodeDTO> idNameCodeDTOList = new ArrayList<>();
 
         if (linkedHashMap != null) {
-            idNameCodeDTOList = (List<IdNameCodeDTO>) linkedHashMap.entrySet().stream().map(entry -> IdNameCodeDTO.builder().code(entry.getKey()).build()).toList();
+            idNameCodeDTOList = (List<IdNameCodeDTO>) linkedHashMap.entrySet().stream()
+                    .map(entry -> IdNameCodeDTO.builder().code(entry.getKey()).build()).toList();
         }
 
         return idNameCodeDTOList;
