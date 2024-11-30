@@ -31,7 +31,7 @@ public class JsonUtil {
     }
 
     public static <T> T fromJson(String json, Class<T> clazz) {
-        if (StringUtils.hasText(json)) {
+        if (!StringUtils.hasText(json)) {
             return null;
         }
         try {
@@ -44,7 +44,7 @@ public class JsonUtil {
 
     //JSON FOR GENERIC MAPS AND TYPE SAFETY
     public static <K, V> Map<K, V> fromJson(String json, Class<? extends Map> mapClass, Class<K> keyclass, Class<V> valueClass) {
-        if (StringUtils.hasText(json)) {
+        if (!StringUtils.hasText(json)) {
             return getEmtpMap(mapClass);
         }
         try {
@@ -77,6 +77,35 @@ public class JsonUtil {
 
         return idNameCodeDTOList;
     }
+
+    public static List<IdNameCodeDTO> convertLinkedHashMapToList2(Map<String, String> linkedHashMap) {
+        List<IdNameCodeDTO> idNameCodeDTOList = new ArrayList<>();
+
+        if (linkedHashMap != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            idNameCodeDTOList = linkedHashMap.entrySet().stream()
+                    .map(entry -> {
+                        try {
+                            // Assuming the value is a JSON representation of the DTO
+                            String json = entry.getValue();
+                            IdNameCodeDTO dto = objectMapper.readValue(json, IdNameCodeDTO.class);
+                            dto.setCode(entry.getKey()); // Explicitly set the code from the map key
+                            return dto;
+                        } catch (Exception e) {
+                            // Log error and create a partial DTO if deserialization fails
+                            log.error("Failed to map entry: key={}, value={}", entry.getKey(), entry.getValue(), e);
+                            return IdNameCodeDTO.builder()
+                                    .code(entry.getKey())
+                                    .build();
+                        }
+                    })
+                    .toList();
+        }
+
+        return idNameCodeDTOList;
+    }
+
 
 }
 

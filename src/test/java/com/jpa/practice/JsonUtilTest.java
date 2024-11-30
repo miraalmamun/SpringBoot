@@ -35,5 +35,17 @@ public class JsonUtilTest {
 
         List<IdNameCodeDTO> dtoList = JsonUtil.convertLinkedHashMapToList(linkedHashMap);
         System.out.println("DTO List from Map: " + dtoList);
+
+
+        Map<String, String> linkedHashMap2 = new HashMap<>();
+        linkedHashMap2.put("code1", "{\"id\":1,\"name\":\"Name1\",\"sortOrderNum\":1,\"isRequestable\":true}");
+        List<IdNameCodeDTO> dtoList2 = JsonUtil.convertLinkedHashMapToList2(linkedHashMap2);
+        System.out.println("DTO List from Map: " + dtoList2);
+        linkedHashMap2.put("code2", "{\"id\":2,\"name\":\"Name2\",\"sortOrderNum\":2,\"isRequestable\":false}");
+        List<IdNameCodeDTO> dtoList3 = JsonUtil.convertLinkedHashMapToList2(linkedHashMap2);
+        System.out.println("DTO List from Map: " + dtoList3);
+
+
+
     }
 }
