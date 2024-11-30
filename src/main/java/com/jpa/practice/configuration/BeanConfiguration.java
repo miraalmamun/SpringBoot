@@ -30,7 +30,7 @@ public class BeanConfiguration {
                 student.addBook(new Book("Biology", LocalDateTime.now().minusYears(5)));
                 student.addBook(new Book("Phsysic", LocalDateTime.now().minusYears(1)));
 
-                StudentIdCard studentIdCard = new StudentIdCard("12234" + i, student);
+                StudentIdCard studentIdCard = new StudentIdCard("12235" + i, student);
 
                 student.setStudentIdCard(studentIdCard);
                 student.enrolToCourese(new Course("Java","IT"));

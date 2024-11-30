@@ -11,6 +11,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<Users, Integer> {
 
     // Custom query to filter by JSON field (PostgreSQL-specific)
-    @Query("SELECT u FROM User u WHERE JSONB_EXTRACT_PATH_TEXT(u.address, 'city') = :city")
+    @Query("SELECT u FROM Users u WHERE JSONB_EXTRACT_PATH_TEXT(u.address, 'city') = :city")
     List<Users> findByCity(String city);
 }
