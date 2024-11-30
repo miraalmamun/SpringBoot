@@ -1,10 +1,14 @@
 package com.jpa.practice.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import java.util.Map;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "json_example")
 public class JsonExample {
