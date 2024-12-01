@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Configuration
 public class BeanConfiguration {
@@ -20,13 +21,23 @@ public class BeanConfiguration {
     CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
         return args -> {
 
-            int studentId = 1; // ID of the student to delete and recreate
+            System.out.println("Deleting all students...");
+            studentRepository.deleteAll();
+            System.out.println("All students have been deleted.");
+            /*
+            Optional<Integer> firstStudentId = studentRepository.findFirstStudentId();
+            if (firstStudentId.isPresent()) {
+                int studentId = firstStudentId.get();
 
-            // Check if the student exists and delete it
-            studentRepository.findById(studentId).ifPresent(student -> {
-                System.out.println("Deleting student with ID: " + studentId);
-                studentRepository.deleteById(studentId); // Delete the student and related entities
-            });
+                // Check if the student exists and delete it
+                studentRepository.findById(studentId).ifPresent(student -> {
+                    System.out.println("Deleting student with ID: " + studentId);
+                    studentRepository.deleteById(studentId);
+                });
+            } else {
+                System.out.println("No students found in the database.");
+            }
+             */
             Faker faker = new Faker();
             var fname = faker.name().firstName();
             var lname = faker.name().lastName();
