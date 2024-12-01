@@ -1,5 +1,6 @@
 package com.jpa.practice.model;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
@@ -16,6 +17,7 @@ public class Users {
     @Column(nullable = false)
     private String name;
 
+    @Type(JsonBinaryType.class) // Specify the type to handle JSON data
     @Column(columnDefinition = "jsonb") // Specifies that the column is JSONB in the database
     private String address; // JSON data stored as a String
 

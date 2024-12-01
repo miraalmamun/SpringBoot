@@ -1,5 +1,6 @@
 package com.jpa.practice.model;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class JsonExample {
     private String name;
 
      // Store as JSON in the database
+     @Type(JsonBinaryType.class) // Specify the type to handle JSON data
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> preferences; // Flexible, JSON-based field
 

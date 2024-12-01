@@ -19,31 +19,37 @@ public class BeanConfiguration {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
         return args -> {
-            for (int i = 0; i < 1; i++) {
-                studentRepository.deleteById(1);
-                Faker faker = new Faker();
-                var fname = faker.name().firstName();
-                var lname = faker.name().lastName();
-                var email = fname + "." + lname + "@gmail.com";
-                Student student = new Student(fname, lname, email);
-                student.addBook(new Book("Computer", LocalDateTime.now().minusYears(12)));
-                student.addBook(new Book("Biology", LocalDateTime.now().minusYears(5)));
-                student.addBook(new Book("Phsysic", LocalDateTime.now().minusYears(1)));
 
-                StudentIdCard studentIdCard = new StudentIdCard("12235" + i, student);
+            int studentId = 1; // ID of the student to delete and recreate
 
-                student.setStudentIdCard(studentIdCard);
-                student.enrolToCourese(new Course("Java","IT"));
-                student.enrolToCourese(new Course("Manthmetics","Science"));
+            // Check if the student exists and delete it
+            studentRepository.findById(studentId).ifPresent(student -> {
+                System.out.println("Deleting student with ID: " + studentId);
+                studentRepository.deleteById(studentId); // Delete the student and related entities
+            });
+            Faker faker = new Faker();
+            var fname = faker.name().firstName();
+            var lname = faker.name().lastName();
+            var email = fname + "." + lname + "@gmail.com";
+            Student student = new Student(fname, lname, email);
+            student.addBook(new Book("Computer", LocalDateTime.now().minusYears(12)));
+            student.addBook(new Book("Biology", LocalDateTime.now().minusYears(5)));
+            student.addBook(new Book("Phsysic", LocalDateTime.now().minusYears(1)));
+
+            StudentIdCard studentIdCard = new StudentIdCard("12235", student);
+
+            student.setStudentIdCard(studentIdCard);
+            student.enrolToCourese(new Course("Java", "IT"));
+            student.enrolToCourese(new Course("Manthmetics", "Science"));
 
 
-                studentRepository.save(student);
+            studentRepository.save(student);
 
-                studentRepository.findById(1).ifPresent(s -> {
-                    System.out.println("Fetch book lazy...");
-                    student.getBooks().forEach(b -> System.out.println(b.getStudent().getFirstName() + " borrowed " + b.getBookName()));
-                });
-            }
+            studentRepository.findById(1).ifPresent(s -> {
+                System.out.println("Fetch book lazy...");
+                student.getBooks().forEach(b -> System.out.println(b.getStudent().getFirstName() + " borrowed " + b.getBookName()));
+            });
+
 
         };
     }
