@@ -19,7 +19,7 @@ public class IdNameCodeDTO implements AppDTO{
     String code;
     String name;
     private String sortOrderNum;
-    boolean isRequestable;
+    boolean isResettable;
 
     public IdNameCodeDTO(Integer id, String code, String name) {
         this.id = id;
@@ -34,3 +34,4 @@ public class IdNameCodeDTO implements AppDTO{
         this.sortOrderNum = sortOrderNum;
     }
 }
+
